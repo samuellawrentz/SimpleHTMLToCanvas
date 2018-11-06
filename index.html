@@ -1,14 +1,61 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <link rel="stylesheet" href="https://assets.burning-glass.com/visualizations/percentile-viz/v1.0.0/css/percentileViz.min.css">
 <link rel="stylesheet" href="https://assets.burning-glass.com/visualizations/linear-gauge/v1.0.0/css/linearGauge.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+crossorigin=""/>
+<link rel="stylesheet" href="https://assets.burning-glass.com/visualizations/heat-map/v1.3.0/css/heatMap.min.css">
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+   crossorigin=""></script>
+   <script src="https://assets.burning-glass.com/visualizations/heat-map/v1.3.0/js/heatMap.min.js"></script>
 <script src="https://assets.burning-glass.com/visualizations/linear-gauge/v1.0.0/js/linearGauge.min.js"></script>
 <link rel="stylesheet" href="https://assets.burning-glass.com/visualizations/benchmark-stat/v1.0.0/css/benchmarkStat.min.css">
 
-
+<style>
+    #controls{
+        position: relative;
+        z-index: 10;
+        top: -150px;
+        width: 100px;
+        background-color: green;
+    }
+</style>
 <script src="https://assets.burning-glass.com/visualizations/percentile-viz/v1.0.0/js/percentileViz.min.js"></script>
 <script src="https://assets.burning-glass.com/visualizations/benchmark-stat/v1.0.0/js/benchmarkStat.min.js"></script>
 <div id="outer">
-    <div id="pluginContainer"></div>    
+    <div id="pluginContainer" style="height: 300px;">
+    </div>    
 </div>
 <script src="./svg2url.js"></script>
+<script>
+    $('#pluginContainer').heatMap({
+            mapControl: [
+                {
+                    title: 'View:',
+                    items: [{ id: 1, name: 'Demand' }, { id: 2, name: 'Salary' }, { id: 3, name: 'Time to Fill' }, { id: 4, name: 'Location Quotient' }]
+                },
+                {
+                    title: 'View By:',
+                    items: [{ id: 5, name: 'State' }, { id: 6, name: 'Metro Area (MSA)' }, { id: 7, name: 'County' }]
+                }
+            ]
+});
+ 
+var highlightAreaCollection = [{
+            geoAreaType: 'state',
+            highlightAreas: [{
+                id: 'AL',
+                density: 750
+            }, {
+                id: 'GA',
+                density: 100
+            }, {
+                id: 'FL',
+                density: 1500
+            }]
+        }];
+ 
+$('#pluginContainer').data('heatMap').highlightAreas(highlightAreaCollection);
+</script>
 <button onclick="check()" class="btn btn-primary float-right">Generate URL</button>
